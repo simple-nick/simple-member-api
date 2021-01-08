@@ -11,7 +11,8 @@ api_password = '123'
 def authentication(route):
     @wraps(route)
     def wrapper(*args, **kwargs):
-        if request.authorization.username == api_username and request.authorization.password == api_password:
+        auth = request.authorization
+        if auth and auth.username == api_username and auth.password == api_password:
             return route(*args, **kwargs)
         return jsonify({'message': 'Authentication failed'}, 403)
 
